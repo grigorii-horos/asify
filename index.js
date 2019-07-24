@@ -19,7 +19,7 @@ const types = ({ src, type }) => {
     js = type === 'script';
     css = type === 'style';
   } else {
-    const b = /css/.test(src);
+    const b = /css$/.test(src);
     css = b;
     js = !b;
   }
