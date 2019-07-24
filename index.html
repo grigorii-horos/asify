@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+
+    <script src="index.js"></script>
+    <script >
+
+      const first = ['./tests/first.js', './tests/second.js', './tests/first.css'];
+      const second_third = ['./tests/third.js'];
+
+      preloadExternal([first, second_third]);
+      loadExternal([first, second_third]);
+    </script>
+  </body>
+</html>

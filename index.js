@@ -1,134 +1,149 @@
-/* eslint-disable no-plusplus,consistent-return,func-names,no-underscore-dangle,max-len,no-shadow,no-param-reassign */
+const { isArray } = Array;
+const d = document;
+const crEl = d.createElement.bind(d);
+const { head, body } = d;
+let g = null;
 
-/**
- * @module index
- * This is scripts loader.
- * It load scripts one by one in order to keep the startup order.
- * For performance it create `<link type="preload">` tags
- * who will preload all scripts using paralell download.
- *
- */
-
-
-/**
- *
- * @param {string[]} URLs
- * @param {string} type
- * @returns {undefined}
- */
-function preloadExternal(externals, type, baseURL) {
-  if (typeof externals === 'string') {
-    if (!type) {
-      type = /css/.test(externals) ? 'style' : 'script';
-    }
-    externals = [[externals]];
-  }
-
-  type = type || 'script';
-  baseURL = baseURL || '';
-
-  externals.forEach(function fn(externalsSub) {
-    externalsSub.forEach(function fn(script) {
-      var script_ = Array.isArray(script) ? script[0] : script;
-      var link = document.createElement('link');
-      link.setAttribute('rel', 'preload');
-      link.setAttribute('href', script_.startsWith('/') ? baseURL + script_ : script_);
-      link.setAttribute('as', type);
-      if (Array.isArray(script) && script[2]) {
-        script[2].forEach(function fn(atribute) {
-          link.setAttribute(atribute[0], atribute[1]);
-        });
-      }
-      document.head.append(link);
-    });
-  });
+if (typeof window !== 'undefined') {
+  g = window;
 }
 
+if (typeof module !== 'undefined') {
+  g = module.exports;
+}
 
-function loadExternal(externals, config, callback) {
-  var type;
-  var baseURL;
-  if (typeof externals === 'string') {
-    type = /css/.test(externals) ? 'style' : 'script';
-    externals = [[externals]];
-  }
-
-  if (typeof config === 'function') {
-    callback = config;
-    type = type || 'script';
-    baseURL = '';
-  } else if (typeof config === 'string') {
-    type = config;
-    baseURL = '';
-  } else if (typeof config === 'object') {
-    type = config.type || (type || 'script');
-    baseURL = config.baseURL || '';
+const types = (type) => {
+  let css; let
+    js;
+  if (type) {
+    js = type === 'script';
+    css = type === 'style';
   } else {
-    type = type || 'script';
-    baseURL = '';
+    const b = /css/.test(src);
+    css = b;
+    js = !b;
+  }
+  return { js, css };
+};
+
+const getURLs = (exts) => {
+  const srcToObj = string => ({
+    src: string,
+    load: {},
+    preload: {},
+  });
+
+  const arrToObj = arr => arr.map((arr2) => {
+    if (typeof arr2 === 'string') {
+      return srcToObj(arr2);
+    }
+    return arr2;
+  });
+
+  if (typeof exts === 'string') {
+    return [[
+      srcToObj(exts),
+    ]];
   }
 
-  function load(externals) {
-    var sources = externals.shift();
-    var chunkLenght;
+  if (isArray(exts) && !isArray(exts[0])) {
+    return [
+      arrToObj(exts),
+    ];
+  }
+
+  if (isArray(exts) && isArray(exts[0])) {
+    return exts.map(externals_ => arrToObj(externals_));
+  }
+  return [[]];
+};
+
+const preloadExternal = (exts) => {
+  const urls = getURLs(exts);
+
+
+  urls.forEach((urlsSub) => {
+    urlsSub.forEach((source) => {
+      const { src, preload } = source;
+
+      const { js } = types(src);
+
+      const link = crEl('link');
+      link.setAttribute('rel', 'preload');
+      link.setAttribute('href', src);
+      link.setAttribute('as', js ? 'script' : 'style');
+
+      if (preload) {
+        Object.entries(preload).forEach(([key, value]) => {
+          link.setAttribute(key, value);
+        });
+      }
+
+      console.log('Add preload:', src);
+      head.append(link);
+    });
+  });
+};
+
+const loadExternal = (exts, callback = () => true) => {
+  const urls = getURLs(exts);
+
+  const loadC = (urls) => {
+    const sources = urls.shift();
 
     if (!sources) {
-      return callback ? callback(false) : false;
+      return callback();
     }
-    chunkLenght = sources.length;
+    let chLen = sources.length;
 
 
-    sources.forEach(function fn(source) {
-      var s = document.createElement(type === 'script' ? 'script' : 'link');
-      var source_ = Array.isArray(source) ? source[0] : source;
-      source_ = source_.startsWith('/') ? baseURL + source_ : source_;
-      s.setAttribute(type === 'script' ? 'src' : 'href', source_);
+    sources.map((source) => {
+      const { src, load } = source;
+      const { css, js } = types(src);
 
-      if (type === 'style') {
+
+      const s = crEl(js ? 'script' : 'link');
+      s.setAttribute(js ? 'src' : 'href', src);
+
+      if (css) {
         s.setAttribute('rel', 'stylesheet');
         s.setAttribute('media', 'none');
       }
 
-      if (Array.isArray(source) && source[1]) {
-        source[1].forEach(function fn(atribute) {
-          s.setAttribute(atribute[0], atribute[1]);
-        });
+      if (load) {
+        Object.entries(load).map(([key, value]) => s.setAttribute(key, value));
       }
 
-      if (type === 'script') {
-        console.log('Add script:', source_);
-        document.body.append(s);
+      if (js) {
+        console.log('Add script:', src);
+        body.append(s);
       }
-      if (type === 'style') {
-        console.log('Add style:', source_);
-        document.head.append(s);
+      if (css) {
+        console.log('Add style:', src);
+        head.append(s);
       }
 
-      s.addEventListener('load', function fn() {
-        if (type === 'style') {
-          s.media = 'all';
+      s.addEventListener('load', () => {
+        if (css) {
+          s.media = s.m;
         }
-        chunkLenght--;
-        if (!chunkLenght) {
-          load(externals);
+        chLen--;
+        if (!chLen) {
+          loadC(urls);
         }
       });
 
-      s.addEventListener('error', function fn() {
-        callback(new Error('Can\'t load ' + source_ + '. Try to reload page'));
+      s.addEventListener('error', () => {
+        callback(new Error(`Can't load ${src}. Try to reload page`));
       });
     });
-  }
+  };
 
-  load(externals);
-}
+  loadC(urls);
+};
 
-if (typeof window !== 'undefined') {
-  window.loadExternal = loadExternal;
-  window.preloadExternal = preloadExternal;
-}
 
-if (typeof module !== 'undefined') {
-  module.exports.loadExternal = loadExternal;
-  module.exports.preloadExternal = preloadExternal;
+if (g) {
+  g.loadExternal = loadExternal;
+  g.preloadExternal = preloadExternal;
 }

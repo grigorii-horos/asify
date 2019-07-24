@@ -3,23 +3,43 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "files":[
+    "index.js",
+    "index.min.js"
+  ]
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "dev": "browser-sync --config .bs-config.js",
+    "fix": "eslint --fix index.js index.html",
+    "build": "babel index.js -o index.min.js",
+    "prepublishOnly": "npm run build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-minify": "^0.5.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "babel-preset-minify": "^0.5.0",
+    "browser-sync": "^2.26.7",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-compat": "^3.3.0",
+    "eslint-config-standard-jsdoc": "^9.2.0",
+    "eslint-plugin-async-await": "0.0.0",
     "eslint-plugin-es5": "^1.4.1",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-unicorn": "^9.1.1"
   },
   "browserslist": [
     "chrome 50",
-    "ie >= 9"
+    "ie >= 11"
   ],
-  "dependencies": {
-    "eslint-plugin-jsdoc": "^15.7.1"
-  }
+  "dependencies": {}
 }
