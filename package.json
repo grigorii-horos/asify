@@ -6,9 +6,8 @@
   "files":[
     "index.js",
     "index.min.js"
-  ]
+  ],
   "scripts": {
-    "test": "node test.js",
     "dev": "browser-sync --config .bs-config.js",
     "fix": "eslint --fix index.js index.html",
     "build": "babel index.js -o index.min.js",
