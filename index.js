@@ -12,7 +12,7 @@ if (typeof module !== 'undefined') {
   g = module.exports;
 }
 
-const types = (type) => {
+const types = ({ src, type }) => {
   let css; let
     js;
   if (type) {
@@ -46,6 +46,12 @@ const getURLs = (exts) => {
     ]];
   }
 
+  if (!isArray(exts) && typeof exts === 'object') {
+    return [[
+      exts,
+    ]];
+  }
+
   if (isArray(exts) && !isArray(exts[0])) {
     return [
       arrToObj(exts),
@@ -66,7 +72,7 @@ const preloadExternal = (exts) => {
     urlsSub.forEach((source) => {
       const { src, preload } = source;
 
-      const { js } = types(src);
+      const { js } = types(source);
 
       const link = crEl('link');
       link.setAttribute('rel', 'preload');
@@ -99,7 +105,7 @@ const loadExternal = (exts, callback = () => true) => {
 
     sources.map((source) => {
       const { src, load } = source;
-      const { css, js } = types(src);
+      const { css, js } = types(source);
 
 
       const s = crEl(js ? 'script' : 'link');
