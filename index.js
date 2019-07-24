@@ -119,7 +119,6 @@ const loadExternal = (exts, callback = () => true) => {
       if (load) {
         Object.entries(load).map(([key, value]) => s.setAttribute(key, value));
       }
-      s.m = s.media || 'all';
 
       if (js) {
         console.log('Add script:', src);
@@ -132,7 +131,7 @@ const loadExternal = (exts, callback = () => true) => {
 
       s.addEventListener('load', () => {
         if (css) {
-          s.media = s.m;
+          s.media = 'all';
         }
         chLen--;
         if (!chLen) {
