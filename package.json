@@ -1,8 +1,7 @@
 {
   "name": "asify",
-    "description": "Async loader for srcript and styles",
-  "version": "2.0.4",
   "description": "",
+  "version": "2.0.5",
   "main": "index.js",
   "files": [
     "index.js",
@@ -42,8 +41,14 @@
     "ie >= 11"
   ],
   "dependencies": {},
-    "keywords": [
-    "loader","load", "script", "style", "async", "lazy", "lazy-load"
+  "keywords": [
+    "loader",
+    "load",
+    "script",
+    "style",
+    "async",
+    "lazy",
+    "lazy-load"
   ],
   "maintainers": [
     {
