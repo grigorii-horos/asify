@@ -1,13 +1,11 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": false,
-        "loose":false
-      }
-    ],
     "minify"
   ],
-    "plugins": ["transform-remove-console"]
+    "plugins": [
+       "@babel/transform-arrow-functions",
+       "@babel/transform-shorthand-properties",
+       "@babel/transform-block-scoping",
+       "transform-remove-console"
+    ]
 }

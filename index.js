@@ -9,7 +9,6 @@ if (typeof module !== 'undefined') {
   g = module.exports;
 }
 
-
 const f = () => {
   const crEl = d.createElement.bind(d);
   const { head, body } = d;
@@ -22,25 +21,11 @@ const f = () => {
     element.setAttribute(attr, value);
   };
 
-  const types = (entry) => {
-    if (entry.type) {
-      return {
-        js: entry.type === scriptStr,
-        css: entry.type === styleStr,
-      };
-    }
-    const isStyle = /css$/.test(entry.src);
-    return {
-      css: isStyle,
-      js: !isStyle,
-    };
-  };
+  const isStyleFn = entry => entry.type === styleStr || /css$/.test(entry.src);
 
   const getURLs = (exts) => {
     const srcToObj = string => ({
-      src: string,
-      load: {},
-      preload: {},
+      src: string
     });
 
     const arrToObj = arr => arr.map((arr2) => {
@@ -82,12 +67,12 @@ const f = () => {
       urlsSub.forEach((source) => {
         const { src, preload } = source;
 
-        const { js } = types(source);
+        const isStyle = isStyleFn(source);
 
         const link = crEl('link');
         sAttr(link, 'rel', 'preload');
         sAttr(link, 'href', src);
-        sAttr(link, 'as', js ? scriptStr : styleStr);
+        sAttr(link, 'as', isStyle ? styleStr : scriptStr);
 
         if (preload) {
           for (const key in preload) {
@@ -118,13 +103,12 @@ const f = () => {
 
       sources.map((source) => {
         const { src, load } = source;
-        const { css, js } = types(source);
+        const isStyle = isStyleFn(source);
 
+        const s = crEl(isStyle ? 'link' : scriptStr);
+        sAttr(s, isStyle ? 'href' : 'src', src);
 
-        const s = crEl(js ? scriptStr : 'link');
-        sAttr(s, js ? 'src' : 'href', src);
-
-        if (css) {
+        if (isStyle) {
           sAttr(s, 'rel', 'stylesheet');
           sAttr(s, 'media', 'none');
         }
@@ -136,10 +120,10 @@ const f = () => {
         }
 
         console.log('Add file:', src);
-        (css ? body : head).append(s);
+        (isStyle ? head : body).append(s);
 
         s.addEventListener('load', () => {
-          if (css) {
+          if (isStyle) {
             s.media = 'all';
           }
           chLen--;
