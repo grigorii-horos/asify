@@ -1,11 +1,20 @@
 {
   "presets": [
+
     "minify"
   ],
     "plugins": [
-       "@babel/transform-arrow-functions",
-       "@babel/transform-shorthand-properties",
-       "@babel/transform-block-scoping",
-       "transform-remove-console"
+      "transform-remove-console",
+      "@babel/transform-arrow-functions",
+      "@babel/transform-block-scoped-functions",
+      "@babel/transform-shorthand-properties",
+      "@babel/transform-computed-properties",
+      "@babel/transform-parameters",
+      "@babel/transform-destructuring",
+      "@babel/transform-block-scoping",
+      "@babel/transform-regenerator",
+      "@babel/proposal-object-rest-spread",
+      "@babel/proposal-optional-catch-binding",
+      "@babel/transform-named-capturing-groups-regex"
     ]
 }

@@ -1,18 +1,9 @@
-const d = document;
-let g = null;
-
-if (typeof window !== 'undefined') {
-  g = window;
-}
-
-if (typeof module !== 'undefined') {
-  g = module.exports;
-}
-
-const f = () => {
+(function fn(w) {
+  const d = w.document;
   const crEl = d.createElement.bind(d);
-  const { head, body } = d;
-  const { isArray } = Array;
+  const head = d.head;
+  const body=d.body
+  const isArray = Array.isArray;
   const scriptStr = 'script';
   const styleStr = 'style';
   const stringStr = 'string';
@@ -25,7 +16,7 @@ const f = () => {
 
   const getURLs = (exts) => {
     const srcToObj = string => ({
-      src: string
+      src: string,
     });
 
     const arrToObj = arr => arr.map((arr2) => {
@@ -59,7 +50,7 @@ const f = () => {
     return [[]];
   };
 
-  const p = (exts) => {
+  const preloadExternal = (exts) => {
     const urls = getURLs(exts);
 
 
@@ -86,7 +77,7 @@ const f = () => {
     });
   };
 
-  const l = (exts, cb) => {
+  const loadExternal = (exts, cb) => {
     if (!cb) {
       cb = () => {};
     }
@@ -141,11 +132,12 @@ const f = () => {
     loadC(urls);
   };
 
-  return [p, l];
-};
-const fs = f();
-
-if (g) {
-  g.preloadExternal = fs[0];
-  g.loadExternal = fs[1];
-}
+  // commonjs
+  if (typeof exports !== 'undefined') {
+    exports.preloadExternal = preloadExternal;
+    exports.loadExternal = loadExternal;
+  } else {
+    w.preloadExternal = preloadExternal;
+    w.loadExternal = loadExternal;
+  }
+}(this));
