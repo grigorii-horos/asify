@@ -140,4 +140,4 @@
     w.preloadExternal = preloadExternal;
     w.loadExternal = loadExternal;
   }
-}(this));
+}(typeof global !== "undefined" ? global : window));
