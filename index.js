@@ -50,7 +50,7 @@
     return [[]];
   };
 
-  const preloadExternal = (exts) => {
+  const preloadExternal = (exts,type) => {
     const urls = getURLs(exts);
 
 
@@ -61,7 +61,7 @@
         const isStyle = isStyleFn(source);
 
         const link = crEl('link');
-        sAttr(link, 'rel', 'preload');
+        sAttr(link, 'rel', type||'preload');
         sAttr(link, 'href', src);
         sAttr(link, 'as', isStyle ? styleStr : scriptStr);
 
