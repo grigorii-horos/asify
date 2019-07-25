@@ -39,9 +39,11 @@
   },
   "browserslist": [
     "chrome 50",
-    "ie >= 11"
+    "ie >= 10"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.1.4"
+  },
   "keywords": [
     "loader",
     "load",

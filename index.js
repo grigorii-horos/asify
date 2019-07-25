@@ -1,7 +1,4 @@
-const { isArray } = Array;
 const d = document;
-const crEl = d.createElement.bind(d);
-const { head, body } = d;
 let g = null;
 
 if (typeof window !== 'undefined') {
@@ -12,144 +9,165 @@ if (typeof module !== 'undefined') {
   g = module.exports;
 }
 
-const types = ({ src, type }) => {
-  let css; let
-    js;
-  if (type) {
-    js = type === 'script';
-    css = type === 'style';
-  } else {
-    const b = /css$/.test(src);
-    css = b;
-    js = !b;
-  }
-  return { js, css };
-};
 
-const getURLs = (exts) => {
-  const srcToObj = string => ({
-    src: string,
-    load: {},
-    preload: {},
-  });
+const f = () => {
+  const crEl = d.createElement.bind(d);
+  const { head, body } = d;
+  const { isArray } = Array;
+  const scriptStr = 'script';
+  const styleStr = 'style';
+  const stringStr = 'string';
 
-  const arrToObj = arr => arr.map((arr2) => {
-    if (typeof arr2 === 'string') {
-      return srcToObj(arr2);
+  const sAttr = (element, attr, value) => {
+    element.setAttribute(attr, value);
+  };
+
+  const types = (entry) => {
+    if (entry.type) {
+      return {
+        js: entry.type === scriptStr,
+        css: entry.type === styleStr,
+      };
     }
-    return arr2;
-  });
+    const isStyle = /css$/.test(entry.src);
+    return {
+      css: isStyle,
+      js: !isStyle,
+    };
+  };
 
-  if (typeof exts === 'string') {
-    return [[
-      srcToObj(exts),
-    ]];
-  }
-
-  if (!isArray(exts) && typeof exts === 'object') {
-    return [[
-      exts,
-    ]];
-  }
-
-  if (isArray(exts) && !isArray(exts[0])) {
-    return [
-      arrToObj(exts),
-    ];
-  }
-
-  if (isArray(exts) && isArray(exts[0])) {
-    return exts.map(externals_ => arrToObj(externals_));
-  }
-  return [[]];
-};
-
-const preloadExternal = (exts) => {
-  const urls = getURLs(exts);
-
-
-  urls.forEach((urlsSub) => {
-    urlsSub.forEach((source) => {
-      const { src, preload } = source;
-
-      const { js } = types(source);
-
-      const link = crEl('link');
-      link.setAttribute('rel', 'preload');
-      link.setAttribute('href', src);
-      link.setAttribute('as', js ? 'script' : 'style');
-
-      if (preload) {
-        Object.entries(preload).forEach(([key, value]) => {
-          link.setAttribute(key, value);
-        });
-      }
-
-      console.log('Add preload:', src);
-      head.append(link);
+  const getURLs = (exts) => {
+    const srcToObj = string => ({
+      src: string,
+      load: {},
+      preload: {},
     });
-  });
-};
 
-const loadExternal = (exts, callback = () => true) => {
-  const urls = getURLs(exts);
+    const arrToObj = arr => arr.map((arr2) => {
+      if (typeof arr2 === stringStr) {
+        return srcToObj(arr2);
+      }
+      return arr2;
+    });
 
-  const loadC = (urls) => {
-    const sources = urls.shift();
-
-    if (!sources) {
-      return callback();
+    if (typeof exts === stringStr) {
+      return [[
+        srcToObj(exts),
+      ]];
     }
-    let chLen = sources.length;
+
+    if (!isArray(exts) && typeof exts === 'object') {
+      return [[
+        exts,
+      ]];
+    }
+
+    if (isArray(exts) && !isArray(exts[0])) {
+      return [
+        arrToObj(exts),
+      ];
+    }
+
+    if (isArray(exts) && isArray(exts[0])) {
+      return exts.map(externals_ => arrToObj(externals_));
+    }
+    return [[]];
+  };
+
+  const p = (exts) => {
+    const urls = getURLs(exts);
 
 
-    sources.map((source) => {
-      const { src, load } = source;
-      const { css, js } = types(source);
+    urls.forEach((urlsSub) => {
+      urlsSub.forEach((source) => {
+        const { src, preload } = source;
 
+        const { js } = types(source);
 
-      const s = crEl(js ? 'script' : 'link');
-      s.setAttribute(js ? 'src' : 'href', src);
+        const link = crEl('link');
+        sAttr(link, 'rel', 'preload');
+        sAttr(link, 'href', src);
+        sAttr(link, 'as', js ? scriptStr : styleStr);
 
-      if (css) {
-        s.setAttribute('rel', 'stylesheet');
-        s.setAttribute('media', 'none');
-      }
-
-      if (load) {
-        Object.entries(load).map(([key, value]) => s.setAttribute(key, value));
-      }
-
-      if (js) {
-        console.log('Add script:', src);
-        body.append(s);
-      }
-      if (css) {
-        console.log('Add style:', src);
-        head.append(s);
-      }
-
-      s.addEventListener('load', () => {
-        if (css) {
-          s.media = 'all';
+        if (preload) {
+          for (const key in preload) {
+            sAttr(link, key, preload[key]);
+          }
         }
-        chLen--;
-        if (!chLen) {
-          loadC(urls);
-        }
-      });
 
-      s.addEventListener('error', () => {
-        callback(new Error(`Can't load ${src}. Try to reload page`));
+        console.log('Add preload:', src);
+        head.append(link);
       });
     });
   };
 
-  loadC(urls);
-};
+  const l = (exts, cb) => {
+    if (!cb) {
+      cb = () => {};
+    }
+    const urls = getURLs(exts);
 
+    const loadC = (urls) => {
+      const sources = urls.shift();
+
+      if (!sources) {
+        return cb();
+      }
+      let chLen = sources.length;
+
+
+      sources.map((source) => {
+        const { src, load } = source;
+        const { css, js } = types(source);
+
+
+        const s = crEl(js ? scriptStr : 'link');
+        sAttr(s, js ? 'src' : 'href', src);
+
+        if (css) {
+          sAttr(s, 'rel', 'stylesheet');
+          sAttr(s, 'media', 'none');
+        }
+
+        if (load) {
+          for (const key in load) {
+            sAttr(s, key, load[key]);
+          }
+        }
+
+        if (js) {
+          console.log('Add script:', src);
+          body.append(s);
+        }
+        if (css) {
+          console.log('Add style:', src);
+          head.append(s);
+        }
+
+        s.addEventListener('load', () => {
+          if (css) {
+            s.media = 'all';
+          }
+          chLen--;
+          if (!chLen) {
+            loadC(urls);
+          }
+        });
+
+        s.addEventListener('error', (err) => {
+          cb(err);
+        });
+      });
+    };
+
+    loadC(urls);
+  };
+
+  return [p, l];
+};
+const fs = f();
 
 if (g) {
-  g.loadExternal = loadExternal;
-  g.preloadExternal = preloadExternal;
+  g.preloadExternal = fs[0];
+  g.loadExternal = fs[1];
 }
