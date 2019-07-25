@@ -1,5 +1,6 @@
 {
   "name": "asify",
+    "description": "Async loader for srcript and styles",
   "version": "2.0.4",
   "description": "",
   "main": "index.js",
@@ -40,5 +41,31 @@
     "chrome 50",
     "ie >= 11"
   ],
-  "dependencies": {}
+  "dependencies": {},
+    "keywords": [
+    "loader","load", "script", "style", "async", "lazy", "lazy-load"
+  ],
+  "maintainers": [
+    {
+      "name": "Grigorii Horos",
+      "email": "",
+      "web": "https://github.com/horosgrisa"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/horosgrisa/asify/issues"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/horosgrisa/asify"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://github.com/horosgrisa/asify/LICENSE"
+    }
+  ],
+  "homepage": "https://github.com/horosgrisa/asify"
 }
