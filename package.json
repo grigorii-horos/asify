@@ -10,18 +10,12 @@
   "scripts": {
     "dev": "browser-sync --config .bs-config.js",
     "fix": "eslint --fix index.js index.html README.md",
-    "build": "babel index.js -o index.min.js",
+    "build": "uglifyjs --compress drop_console --mangle --mangle-props reserved=[preloadExternal,loadExternal] -- index.js > index.min.js",
     "prepublishOnly": "npm run build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "babel-minify": "^0.5.0",
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "babel-preset-minify": "^0.5.0",
     "browser-sync": "^2.26.7",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
@@ -35,7 +29,8 @@
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-unicorn": "^9.1.1"
+    "eslint-plugin-unicorn": "^9.1.1",
+    "uglify-js": "^3.6.0"
   },
   "browserslist": [
     "chrome 50",

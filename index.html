@@ -4,7 +4,7 @@
   </head>
   <body>
 
-    <script src="./index.js"></script>
+    <script src="./index.min.js"></script>
     <script >
 
       const first = ['./tests/first.js', './tests/second.js', './tests/first.css'];
@@ -12,10 +12,11 @@
 
       // preloadExternal([first, second_third]);
       loadExternal([first, second_third]);
-      loadExternal([{
+      loadExternal({
         src: './tests/test.jsx',
         type: 'script',
-      }]);
+      });
+    
     </script>
   </body>
 </html>
