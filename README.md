@@ -24,18 +24,18 @@ npm install asify
 #### Load Single file
 
 ```js
-loadExternal('http://example.com/script.js')
+loadExternal('http://example.com/script.js');
 ```
 #### Preload Single file
 
 ```js
-preloadExternal('http://example.com/script.js')
+preloadExternal('http://example.com/script.js');
 ```
 
 #### Array of files
 
 ```js
-loadExternal([  // Or preloadExternal
+loadExternal([ // Or preloadExternal
   'http://example.com/script.js',
   'http://example.com/style.css',
 ]);
@@ -53,17 +53,17 @@ loadExternal([ // Or preloadExternal
   ], [
     'http://example.com/post.js',
     'http://example.com/post.css',
-  ]
+  ],
 ]);
 ```
 
-`pre`-files will be loaded async, and after that will be loaded asyn `post`-files
+`pre`-files will be loaded async, and after that will be loaded async `post`-files
 
 #### Callbacks
 
 ```js
-preloadExternal('http://example.com/script.js',(error)=>console.log(error))
-loadExternal('http://example.com/script.js',(error)=>console.log(error))
+preloadExternal('http://example.com/script.js', error => console.log(error));
+loadExternal('http://example.com/script.js', error => console.log(error));
 ```
 
 #### Source Object 

@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     "json",
     "html",
+    "markdown",
     "no-loops",
     "async-await",
     "prefer-object-spread",
@@ -31,5 +32,14 @@ module.exports = {
     "prefer-object-spread/prefer-object-spread": 2,
     "no-restricted-globals": ["error"].concat(restrictedGlobals),
     "import/extensions":0
-  }
+  },
+  "overrides": [{
+        "files": ["**/*.md"],
+        "rules": {
+            "no-undef": "off",
+            "no-unused-vars": "off",
+            "no-console": "off",
+            "padded-blocks": "off"
+        }
+    }]
 };
