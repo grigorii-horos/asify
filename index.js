@@ -71,7 +71,7 @@
           }
         }
 
-        console.log('Add preload:', src);
+        console.log('Add '+(type||'preload')+':', src);
         head.append(link);
       });
     });
