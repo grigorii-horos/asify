@@ -135,14 +135,8 @@ const f = () => {
           }
         }
 
-        if (js) {
-          console.log('Add script:', src);
-          body.append(s);
-        }
-        if (css) {
-          console.log('Add style:', src);
-          head.append(s);
-        }
+        console.log('Add file:', src);
+        (css ? body : head).append(s);
 
         s.addEventListener('load', () => {
           if (css) {
