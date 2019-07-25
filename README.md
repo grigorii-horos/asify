@@ -72,11 +72,12 @@ Instead of string with URL, you can provide object
 
 ```js
 loadExternal({ // Or preloadExternal
-  src:'http://example.com/script',
-  type:'script',
+  src: 'http://example.com/script',
+  type: 'script',
   load: { crossorigin: 'anonymous' },
   preload: { crossorigin: 'anonymous' },
-})
+});
+```
 
 Params
 
@@ -84,8 +85,6 @@ Params
 * `type` - if type of file can't be detected from `src`, you need to provide `type` param
 * `load` - params for `script` or `link` tags when you load files
 * `preload` - params for `<meta rel="preload" >` tag when you preload files
-
-```
 
 ## Author
 
