@@ -3,6 +3,7 @@
   "description": "",
   "version": "2.1.0",
   "main": "index.js",
+  "types":"index.d.ts",
   "files": [
     "index.js",
     "index.min.js"
