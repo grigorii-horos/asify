@@ -6,4 +6,5 @@ module.exports = {
   },
   minify: false,
   injectNotification: true,
+  open:false
 };

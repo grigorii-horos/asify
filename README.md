@@ -10,7 +10,7 @@
 </p>
 
 Async loader for srcript and styles. 
-Only 1003 bytes for `min.js` or 519 bytes for commpresed file!!!
+Only 956 bytes for `min.js` or 508 bytes for commpresed file!!!
 
 ### 🏠 [Homepage](https://github.com/horosgrisa/asify)
 

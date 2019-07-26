@@ -1,80 +1,66 @@
-(function (w) {
-  var d = w.document;
-  var crEl = d.createElement.bind(d);
-  var head = d.head;
-  var body = d.body;
-  var scriptStr = 'script';
-  var styleStr = 'style';
-  var stringStr = 'string';
-
+// @ts-ignore
+(function (w, d, scriptStr, styleStr, isArray) {
   function sAttr(element, attr, value) {
     element.setAttribute(attr, value);
   }
 
   function isStyleFn(entry) {
-    return entry.type === styleStr || /css$/.test(entry.src);
+    return entry.type == styleStr || /css$/.test(entry.src);
   }
 
   function getURLs(exts) {
-    function srcToObj(string) {
+    function toObj(arg) {
+      if (typeof arg == 'object') {
+        return arg;
+      }
       return {
-        src: string
+        src: arg
       };
     }
 
-    function arrToObj(arr) {
-      return arr.map(function (arr2) {
-        if (typeof arr2 === stringStr) {
-          return srcToObj(arr2);
-        }
-        return arr2;
-      });
+    // If argument is a string or object
+    if (!isArray(exts)) {
+      return [[toObj(exts)]];
     }
 
-    if (typeof exts === stringStr) {
-      return [[
-        srcToObj(exts)
-      ]];
+    // If argument is one dimensional array
+    if (!isArray(exts[0])) {
+      return [
+        exts.map(toObj)
+      ];
     }
 
-    if (typeof exts === 'object' && !exts[0]) {
-      return [[
-        exts
-      ]];
-    }
-
-    if (!exts[0]) {
-      exts = [exts];
-    }
-
-    return exts.map(function (externals_) { return arrToObj(externals_); });
+    // if argument is two dimensional array
+    return exts.map(function (extsSub) {
+      return extsSub.map(toObj);
+    });
   }
 
   function preloadExternal(exts, type) {
     var urls = getURLs(exts);
 
-
     urls.map(function (urlsSub) {
       urlsSub.map(function (source) {
         var key;
-        var src = source.src;
         var preload = source.preload;
 
-        var isStyle = isStyleFn(source);
-
-        var link = crEl('link');
+        var link = d.createElement('link');
         sAttr(link, 'rel', type || 'preload');
-        sAttr(link, 'href', src);
-        sAttr(link, 'as', isStyle ? styleStr : scriptStr);
+        sAttr(link, 'href', source.src);
+        sAttr(link, 'as', isStyleFn(source) ? styleStr : scriptStr);
 
         if (preload) {
+          // eslint-disable-next-line no-restricted-syntax
           for (key in preload) {
-            sAttr(link, key, preload[key]);
+            // eslint-disable-next-line no-prototype-builtins
+            if (preload.hasOwnProperty(key)) {
+              sAttr(link, key, preload[key]);
+            }
           }
         }
 
-        console.log('Add ' + (type || 'preload') + ':', src);
-        head.append(link);
+        console.log('Add ' + (type || 'preload') + ':', source.src);
+        d.head.append(link);
       });
     });
   }
@@ -85,32 +71,38 @@
     function loadC(urls) {
       var sources = urls.shift();
       if (!sources) {
-        return cb ? cb() : true;
+        if (cb) {
+          return cb();
+        }
       }
+
       var chLen = sources.length;
 
       sources.map(function (source) {
         var key;
-        var src = source.src;
         var load = source.load;
         var isStyle = isStyleFn(source);
 
-        var s = crEl(isStyle ? 'link' : scriptStr);
-        sAttr(s, isStyle ? 'href' : 'src', src);
+        var s = d.createElement(isStyle ? 'link' : scriptStr);
+        sAttr(s, isStyle ? 'href' : 'src', source.src);
 
         if (isStyle) {
           sAttr(s, 'rel', 'stylesheet');
-          sAttr(s, 'media', 'none');
+          sAttr(s, 'media', 'only x');
         }
 
         if (load) {
+          // eslint-disable-next-line no-restricted-syntax
           for (key in load) {
-            sAttr(s, key, load[key]);
+            // eslint-disable-next-line no-prototype-builtins
+            if (load.hasOwnProperty(key)) {
+              sAttr(s, key, load[key]);
+            }
           }
         }
 
-        console.log('Add file:', src);
-        (isStyle ? head : body).append(s);
+        console.log('Add file:', source.src);
+        (isStyle ? d.head : d.body).append(s);
 
         s.onload = function () {
           if (isStyle) {
@@ -123,7 +115,9 @@
         };
 
         s.onerror = function (err) {
-          cb && cb(err);
+          if (cb) {
+            cb(err);
+          }
         };
       });
     }
@@ -132,6 +126,8 @@
   }
 
 
+  // @ts-ignore
   w.preloadExternal = preloadExternal;
+  // @ts-ignore
   w.loadExternal = loadExternal;
-}(window));
+}(window, document, 'script', 'style', Array.isArray));
