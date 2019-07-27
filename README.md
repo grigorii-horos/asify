@@ -20,6 +20,16 @@ Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
 npm install asify
 ```
 
+```js
+const asify = require('asify');
+```
+
+Or use script from CDN;
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/asify@2.0.13/index.js"></script>
+```
+
 ## Usage
 
 #### Load Single file
