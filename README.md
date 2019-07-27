@@ -27,10 +27,17 @@ npm install asify
 ```js
 loadExternal('http://example.com/script.js');
 ```
+
 #### Preload Single file
 
 ```js
 preloadExternal('http://example.com/script.js');
+```
+
+#### Prefetch Single file
+
+```js
+preloadExternal('http://example.com/script.js', 'prefetch');
 ```
 
 #### Array of files
@@ -48,17 +55,15 @@ Files will be loaded async
 
 ```js
 loadExternal([ // Or preloadExternal
-  [
+  [ // These files will be loader first
     'http://example.com/pre.js',
     'http://example.com/pre.css',
-  ], [
+  ], [ // These files will be loaded after
     'http://example.com/post.js',
     'http://example.com/post.css',
   ],
 ]);
 ```
-
-`pre`-files will be loaded async, and after that will be loaded async `post`-files
 
 #### Callbacks
 
@@ -73,19 +78,12 @@ Instead of string with URL, you can provide object
 
 ```js
 loadExternal({ // Or preloadExternal
-  src: 'http://example.com/script',
-  type: 'script',
-  load: { crossorigin: 'anonymous' },
-  preload: { crossorigin: 'anonymous' },
+  src: 'http://example.com/script', //Link to file
+  type: 'script',  // File type, if it can't be detected from `src`
+  load: { crossorigin: 'anonymous' }, // params for `script` or `link` tags 
+  preload: { crossorigin: 'anonymous' }, // params for `<meta rel="preload" >` tag for preload
 });
 ```
-
-Params
-
-* `src` - link to files
-* `type` - if type of file can't be detected from `src`, you need to provide `type` param
-* `load` - params for `script` or `link` tags when you load files
-* `preload` - params for `<meta rel="preload" >` tag when you preload files
 
 ## Author
 
