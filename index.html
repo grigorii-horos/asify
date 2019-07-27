@@ -10,16 +10,16 @@
       const first = ['./tests/first.js', './tests/second.js', './tests/first.css'];
       const second_third = ['./tests/third.js'];
 
-      // preloadExternal([first, second_third]);
-      // loadExternal([first, second_third]);
+      asify.preload([first, second_third]);
+      asify([first, second_third]);
 
       // loadExternal({
       //   src: './tests/test.jsx',
       //   type: 'script',
       // });
 
-      loadExternal(['./tests/first.js'])
-      preloadExternal(['./tests/first.js'])
+      asify(['./tests/first.js'])
+      // preloadExternal(['./tests/first.js'])
     
     </script>
   </body>

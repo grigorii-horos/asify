@@ -36,36 +36,7 @@
     });
   }
 
-  function preloadExternal(exts, type) {
-    var urls = getURLs(exts);
-
-    urls.map(function (urlsSub) {
-      urlsSub.map(function (source) {
-        var key;
-        var preload = source.preload;
-
-        var link = d.createElement('link');
-        sAttr(link, 'rel', type || 'preload');
-        sAttr(link, 'href', source.src);
-        sAttr(link, 'as', isStyleFn(source) ? styleStr : scriptStr);
-
-        if (preload) {
-          // eslint-disable-next-line no-restricted-syntax
-          for (key in preload) {
-            // eslint-disable-next-line no-prototype-builtins
-            if (preload.hasOwnProperty(key)) {
-              sAttr(link, key, preload[key]);
-            }
-          }
-        }
-
-        console.log('Add ' + (type || 'preload') + ':', source.src);
-        d.head.append(link);
-      });
-    });
-  }
-
-  function loadExternal(exts, cb) {
+  function load(exts, cb) {
     var urls = getURLs(exts);
 
     function loadC(urls) {
@@ -74,6 +45,7 @@
         if (cb) {
           return cb();
         }
+        return;
       }
 
       var chLen = sources.length;
@@ -125,9 +97,40 @@
     loadC(urls);
   }
 
+  function preload(exts, type) {
+    var urls = getURLs(exts);
 
-  // @ts-ignore
-  w.preloadExternal = preloadExternal;
-  // @ts-ignore
-  w.loadExternal = loadExternal;
+    urls.map(function (urlsSub) {
+      urlsSub.map(function (source) {
+        var key;
+        var preload = source.preload;
+
+        var link = d.createElement('link');
+        sAttr(link, 'rel', type || 'preload');
+        sAttr(link, 'href', source.src);
+        sAttr(link, 'as', isStyleFn(source) ? styleStr : scriptStr);
+
+        if (preload) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (key in preload) {
+            // eslint-disable-next-line no-prototype-builtins
+            if (preload.hasOwnProperty(key)) {
+              sAttr(link, key, preload[key]);
+            }
+          }
+        }
+
+        console.log('Add ' + (type || 'preload') + ':', source.src);
+        d.head.append(link);
+      });
+    });
+  }
+
+  if (typeof exports !== 'undefined') {
+    exports.asify = load;
+    exports.asify.preload = preload;
+  } else {
+    w.asify = load;
+    w.asify.preload = preload;
+  }
 }(window, document, 'script', 'style', Array.isArray));

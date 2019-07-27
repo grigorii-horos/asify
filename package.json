@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "browser-sync --config .bs-config.js",
     "fix": "eslint --fix index.js index.html README.md",
-    "build": "uglifyjs --compress drop_console --mangle --mangle-props reserved=[preloadExternal,loadExternal] -- index.js > index.min.js",
+    "build": "uglifyjs --compress drop_console --mangle --mangle-props reserved=[asify,preload] -- index.js > index.min.js",
     "prepublishOnly": "npm run build"
   },
   "author": "",

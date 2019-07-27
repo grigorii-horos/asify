@@ -10,7 +10,7 @@
 </p>
 
 Async loader for srcript and styles. 
-Only 956 bytes for `min.js` or 508 bytes for commpresed file!!!
+Only 1031 bytes for `min.js` or 551 bytes for commpresed file!!!
 
 ### 🏠 [Homepage](https://github.com/horosgrisa/asify)
 
@@ -25,25 +25,25 @@ npm install asify
 #### Load Single file
 
 ```js
-loadExternal('http://example.com/script.js');
+asify('http://example.com/script.js');
 ```
 
 #### Preload Single file
 
 ```js
-preloadExternal('http://example.com/script.js');
+asify.preload('http://example.com/script.js');
 ```
 
 #### Prefetch Single file
 
 ```js
-preloadExternal('http://example.com/script.js', 'prefetch');
+asify.preload('http://example.com/script.js', 'prefetch');
 ```
 
 #### Array of files
 
 ```js
-loadExternal([ // Or preloadExternal
+asify([ // Or asify.preload
   'http://example.com/script.js',
   'http://example.com/style.css',
 ]);
@@ -54,7 +54,7 @@ Files will be loaded async
 #### Array of Arrays of files
 
 ```js
-loadExternal([ // Or preloadExternal
+asify([ // Or asify.preload
   [ // These files will be loader first
     'http://example.com/pre.js',
     'http://example.com/pre.css',
@@ -68,8 +68,8 @@ loadExternal([ // Or preloadExternal
 #### Callbacks
 
 ```js
-preloadExternal('http://example.com/script.js', error => console.log(error));
-loadExternal('http://example.com/script.js', error => console.log(error));
+asify.preload('http://example.com/script.js', error => console.log(error));
+asify('http://example.com/script.js', error => console.log(error));
 ```
 
 #### Source Object 
@@ -77,7 +77,7 @@ loadExternal('http://example.com/script.js', error => console.log(error));
 Instead of string with URL, you can provide object
 
 ```js
-loadExternal({ // Or preloadExternal
+asify({ // Or asify.preload
   src: 'http://example.com/script', //Link to file
   type: 'script',  // File type, if it can't be detected from `src`
   load: { crossorigin: 'anonymous' }, // params for `script` or `link` tags 
