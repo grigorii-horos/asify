@@ -6,8 +6,8 @@ Welcome to asify
 [![License: GPL-3.0](https://img.shields.io/github/license/horosgrisa/asify.svg)](https://github.com/horosgrisa/asify/blob/master/LICENSE)
 ![Downloads](https://img.shields.io/npm/dw/asify.svg)
 
-Async loader for srcript and styles. 
-Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
+> Async loader for srcript and styles.
+> Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
 
 ### [Homepage](https://github.com/horosgrisa/asify)
 
