@@ -1,13 +1,10 @@
-<h1 align="center">Welcome to asify 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/npm/v/asify.svg">
-  <a href="https://github.com/horosgrisa/asify">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/horosgrisa/asify/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
-  </a>
-</p>
+Welcome to asify
+===
+![Version](https://img.shields.io/github/package-json/v/horosgrisa/asify.svg)
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/horosgrisa/asify#readme)
+[![Maintenance](https://img.shields.io/maintenance/yes/2019.svg)](https://github.com/horosgrisa/asify/graphs/commit-activity)
+[![License: GPL-3.0](https://img.shields.io/github/license/horosgrisa/asify.svg)](https://github.com/horosgrisa/asify/blob/master/LICENSE)
+![Downloads](https://img.shields.io/npm/dw/asify.svg)
 
 Async loader for srcript and styles. 
 Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
