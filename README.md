@@ -100,7 +100,8 @@ asify({ // Or asify.preload
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/horosgrisa/asify/issues).
+Contributions, issues and feature requests are welcome!  
+Feel free to check [issues page](https://github.com/horosgrisa/asify/issues).
 
 ## Show your support
 
@@ -108,7 +109,7 @@ Give a star if this project helped you!
 
 ## License
 
-Copyright © 2019 [Grigorii Horos](https://github.com/horosgrisa).<br />
+Copyright © 2019 [Grigorii Horos](https://github.com/horosgrisa).  
 This project is [MIT](https://github.com/horosgrisa/asify/LICENSE) licensed.
 
 ***
