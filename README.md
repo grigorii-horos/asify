@@ -9,7 +9,7 @@ Welcome to asify
 Async loader for srcript and styles. 
 Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
 
-### 🏠 [Homepage](https://github.com/horosgrisa/asify)
+### [Homepage](https://github.com/horosgrisa/asify)
 
 ## Install
 
@@ -94,22 +94,22 @@ asify({ // Or asify.preload
 
 ## Author
 
-👤 **Grigorii Horos**
+**Grigorii Horos**
 
 * Github: [@horosgrisa](https://github.com/horosgrisa)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/horosgrisa/asify/issues).
 
 ## Show your support
 
-Give a ⭐️ if this project helped you!
+Give a star if this project helped you!
 
-## 📝 License
+## License
 
 Copyright © 2019 [Grigorii Horos](https://github.com/horosgrisa).<br />
 This project is [MIT](https://github.com/horosgrisa/asify/LICENSE) licensed.
 
 ***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+_This README was generated with love by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
