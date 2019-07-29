@@ -1,5 +1,5 @@
 // @ts-ignore
-(function (w, d, scriptStr, styleStr, isArray) {
+(function(w, d, scriptStr, styleStr, isArray) {
   function sAttr(element, attr, value) {
     element.setAttribute(attr, value);
   }
@@ -10,7 +10,7 @@
 
   function getURLs(exts) {
     function toObj(arg) {
-      if (typeof arg == 'object') {
+      if (typeof arg == "object") {
         return arg;
       }
       return {
@@ -25,13 +25,11 @@
 
     // If argument is one dimensional array
     if (!isArray(exts[0])) {
-      return [
-        exts.map(toObj)
-      ];
+      return [exts.map(toObj)];
     }
 
     // if argument is two dimensional array
-    return exts.map(function (extsSub) {
+    return exts.map(function(extsSub) {
       return extsSub.map(toObj);
     });
   }
@@ -50,17 +48,17 @@
 
       var chLen = sources.length;
 
-      sources.map(function (source) {
+      sources.map(function(source) {
         var key;
         var load = source.load;
         var isStyle = isStyleFn(source);
 
-        var s = d.createElement(isStyle ? 'link' : scriptStr);
-        sAttr(s, isStyle ? 'href' : 'src', source.src);
+        var s = d.createElement(isStyle ? "link" : scriptStr);
+        sAttr(s, isStyle ? "href" : "src", source.src);
 
         if (isStyle) {
-          sAttr(s, 'rel', 'stylesheet');
-          sAttr(s, 'media', 'only x');
+          sAttr(s, "rel", "stylesheet");
+          sAttr(s, "media", "only x");
         }
 
         if (load) {
@@ -73,12 +71,12 @@
           }
         }
 
-        console.log('Add file:', source.src);
+        console.log("Add file:", source.src);
         (isStyle ? d.head : d.body).append(s);
 
-        s.onload = function () {
+        s.onload = function() {
           if (isStyle) {
-            s.media = 'all';
+            s.media = "all";
           }
           chLen--;
           if (!chLen) {
@@ -86,7 +84,7 @@
           }
         };
 
-        s.onerror = function (err) {
+        s.onerror = function(err) {
           if (cb) {
             cb(err);
           }
@@ -100,15 +98,15 @@
   function preload(exts, type) {
     var urls = getURLs(exts);
 
-    urls.map(function (urlsSub) {
-      urlsSub.map(function (source) {
+    urls.map(function(urlsSub) {
+      urlsSub.map(function(source) {
         var key;
         var preload = source.preload;
 
-        var link = d.createElement('link');
-        sAttr(link, 'rel', type || 'preload');
-        sAttr(link, 'href', source.src);
-        sAttr(link, 'as', isStyleFn(source) ? styleStr : scriptStr);
+        var link = d.createElement("link");
+        sAttr(link, "rel", type || "preload");
+        sAttr(link, "href", source.src);
+        sAttr(link, "as", isStyleFn(source) ? styleStr : scriptStr);
 
         if (preload) {
           // eslint-disable-next-line no-restricted-syntax
@@ -120,7 +118,7 @@
           }
         }
 
-        console.log('Add ' + (type || 'preload') + ':', source.src);
+        console.log("Add " + (type || "preload") + ":", source.src);
         d.head.append(link);
       });
     });
@@ -128,4 +126,4 @@
 
   w.asify = load;
   w.asify.preload = preload;
-}(exports || window, document, 'script', 'style', Array.isArray));
+})(window, document, "script", "style", Array.isArray);
