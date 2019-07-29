@@ -19,7 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.26.7",
-    "eslint": "^5.16.0",
+    "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-standard-jsdoc": "^9.2.0",
     "eslint-plugin-async-await": "0.0.0",
@@ -31,7 +31,7 @@
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-unicorn": "^9.1.1",
+    "eslint-plugin-unicorn": "^10.0.0",
     "uglify-js": "^3.6.0"
   },
   "browserslist": [
