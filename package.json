@@ -1,6 +1,6 @@
 {
   "name": "asify",
-  "description": "",
+  "description": "Async loader for scripts and styles",
   "version": "2.1.11",
   "main": "index.js",
   "types": "index.d.ts",

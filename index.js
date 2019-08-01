@@ -123,7 +123,11 @@
       });
     });
   }
-
-  w.asify = load;
-  w.asify.preload = preload;
+  if (typeof exports !== "undefined") {
+    exports.asify = load;
+    exports.asify.preload = preload;
+  }  else {
+    w.asify = load;
+    w.asify.preload = preload;
+  }
 })(window, document, "script", "style", Array.isArray);
