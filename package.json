@@ -1,7 +1,7 @@
 {
   "name": "asify",
   "description": "Async loader for scripts and styles",
-  "version": "2.1.11",
+  "version": "2.2.0",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
