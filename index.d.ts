@@ -1,16 +1,18 @@
-type loaderURL =
-  | string
+export type asifyURL = | string
   | {
       src: string;
       type?: string;
-      preload?: Object;
-      load?: Object;
+      preload?: Object<string, string>;
+      load?: Object<string, string>;
     };
 
-type loaderArg = loaderURL | loaderURL[] | loaderURL[][];
+export type asifyURLs = asifyURL | asifyURL[] | asifyURL[][];
 
-export function asify(exts: loaderArg, cb?: Function): any;
+export as namespace asify;
+export = asify;
 
-export namespace asify {
-  function preload(exts: loaderArg, type?: "prefetch" | string): void;
+declare function asify(args: asifyURLs, cb?: (error) => void): void;
+
+declare namespace asify {
+  function preload(args: asifyURLs, type?: string): void;
 }

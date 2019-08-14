@@ -6,8 +6,8 @@ Welcome to asify
 [![License: GPL-3.0](https://img.shields.io/github/license/horosgrisa/asify.svg)](https://github.com/horosgrisa/asify/blob/master/LICENSE)
 ![Downloads](https://img.shields.io/npm/dw/asify.svg)
 
-> Async loader for srcript and styles.
-> Only 962 bytes for `min.js` or 527 bytes for commpresed file!!!
+> Async loader for scripts and styles.
+> Only 1031 bytes for `min.js` or 551 bytes for commpresed file!!!
 
 ### [Homepage](https://github.com/horosgrisa/asify)
 
@@ -52,7 +52,7 @@ asify.preload('http://example.com/script.js', 'prefetch');
 ```js
 asify([ // Or asify.preload
   'http://example.com/script.js',
-  'http://example.com/style.css',
+  'http://example.com/style.css'
 ]);
 ```
 
@@ -64,11 +64,11 @@ Files will be loaded async
 asify([ // Or asify.preload
   [ // These files will be loader first
     'http://example.com/pre.js',
-    'http://example.com/pre.css',
+    'http://example.com/pre.css'
   ], [ // These files will be loaded after
     'http://example.com/post.js',
-    'http://example.com/post.css',
-  ],
+    'http://example.com/post.css'
+  ]
 ]);
 ```
 
@@ -79,16 +79,16 @@ asify.preload('http://example.com/script.js', error => console.log(error));
 asify('http://example.com/script.js', error => console.log(error));
 ```
 
-#### Source Object 
+#### Source Object
 
 Instead of string with URL, you can provide object
 
 ```js
 asify({ // Or asify.preload
-  src: 'http://example.com/script', //Link to file
-  type: 'script',  // File type, if it can't be detected from `src`
-  load: { crossorigin: 'anonymous' }, // params for `script` or `link` tags 
-  preload: { crossorigin: 'anonymous' }, // params for `<meta rel="preload" >` tag for preload
+  src: 'http://example.com/script', // Link to file
+  type: 'script', // File type, if it can't be detected from `src`
+  load: { crossorigin: 'anonymous' }, // params for `script` or `link` tags
+  preload: { crossorigin: 'anonymous' } // params for `<meta rel="preload" >` tag for preload
 });
 ```
 

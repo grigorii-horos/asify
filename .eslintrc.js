@@ -1,11 +1,6 @@
 // @ts-nocheck
-var restrictedGlobals = require("confusing-browser-globals");
-
 module.exports = {
   root: true,
-  parserOptions: {
-    ecmaVersion: "es5"
-  },
   extends: [
     "eslint:recommended",
     "airbnb-base/legacy",
@@ -14,23 +9,17 @@ module.exports = {
     "json",
     "html",
     "markdown",
-    "no-loops",
-    "async-await",
-    "prefer-object-spread",
-    "promise"
+    "no-loops"
   ],
   env: {
     browser: true,
-    es6: true
+    es6: false
   },
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"
   },
   rules: {
-    "prefer-object-spread/prefer-object-spread": 2,
-    "no-restricted-globals": ["error"].concat(restrictedGlobals),
-    "import/extensions":0,
     "no-console":0,
     "func-names":0,
     "valid-typeof":0,
@@ -42,10 +31,14 @@ module.exports = {
     "no-unused-expressions":0,
     "vars-on-top":0,
     "no-param-reassign":0,
-    "eqeqeq":0
-
+    "eqeqeq":0,
+    "no-restricted-syntax":0,
+    "no-prototype-builtins":0
   },
   "overrides": [{
+        "env":{
+          "es6": true
+        },
         "files": ["**/*.md"],
         "rules": {
             "no-undef": "off",
