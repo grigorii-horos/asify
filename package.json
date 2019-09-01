@@ -1,0 +1,76 @@
+{
+  "name": "asify",
+  "description": "Async loader for scripts and styles",
+  "version": "2.2.1",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "index.min.js"
+  ],
+  "scripts": {
+    "dev": "browser-sync --config .bs-config.js",
+    "fix": "eslint --fix index.js index.html README.md",
+    "build": "uglifyjs --compress drop_console --mangle --mangle-props reserved=[asify,preload] -- index.js > index.min.js",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-standard-jsdoc": "^9.2.0",
+    "eslint-plugin-async-await": "0.0.0",
+    "eslint-plugin-es5": "^1.4.1",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-unicorn": "^10.0.0",
+    "uglify-js": "^3.6.0"
+  },
+  "browserslist": [
+    "chrome 50",
+    "ie >= 10"
+  ],
+  "dependencies": {
+    "core-js": "^3.2.1"
+  },
+  "keywords": [
+    "loader",
+    "load",
+    "script",
+    "style",
+    "async",
+    "lazy",
+    "lazy-load"
+  ],
+  "maintainers": [
+    {
+      "name": "Grigorii Horos",
+      "email": "",
+      "web": "https://github.com/horosgrisa"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/horosgrisa/asify/issues"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/horosgrisa/asify"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://github.com/horosgrisa/asify/LICENSE"
+    }
+  ],
+  "homepage": "https://github.com/horosgrisa/asify"
+}
