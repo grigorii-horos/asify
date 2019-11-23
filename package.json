@@ -1,7 +1,7 @@
 {
   "name": "asify",
   "description": "Async loader for scripts and styles",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -11,8 +11,8 @@
   ],
   "scripts": {
     "dev": "browser-sync --config .bs-config.js",
-    "fix": "eslint --fix index.js index.html README.md",
-    "build": "uglifyjs --compress drop_console --mangle --mangle-props reserved=[asify,preload] -- index.js > index.min.js",
+    "fix": "eslint --fix index.js index.html README.md package.json .eslintrc.js --ignore-pattern '!.eslintrc.js'",
+    "build": "terser --config-file .terserrc index.js > index.min.js",
     "prepublishOnly": "npm run build"
   },
   "author": "",
@@ -32,14 +32,13 @@
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-unicorn": "^10.0.0",
-    "uglify-js": "^3.6.0"
+    "terser": "^4.4.0"
   },
   "browserslist": [
-    "chrome 50",
-    "ie >= 10"
+    "chrome 60",
+    "ie >= 11"
   ],
   "dependencies": {
-    "core-js": "^3.2.1"
   },
   "keywords": [
     "loader",
@@ -53,7 +52,7 @@
   "maintainers": [
     {
       "name": "Grigorii Horos",
-      "email": "",
+      "email": "horosgrisa@gmail.com",
       "web": "https://github.com/horosgrisa"
     }
   ],

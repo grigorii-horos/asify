@@ -1,1 +1,1 @@
-console.log('JSX')
+console.log('JSX');

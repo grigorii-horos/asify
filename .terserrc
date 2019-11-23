@@ -1,0 +1,28 @@
+{
+  "parse": {},
+  "compress": {
+    "ecma": 8,
+    "unsafe": true,
+    "drop_console": true,
+    "unsafe_proto": true,
+    "unsafe_Function": true,
+    "unsafe_comps": true,
+    "arguments": true,
+    "keep_classnames": false,
+    "keep_fnames": false
+  },
+  "mangle": {
+    "properties": {}
+  },
+  "output": {},
+  "sourceMap": {},
+  "ecma": 5,
+  "keep_classnames": false,
+  "keep_fnames": false,
+  "ie8": false,
+  "module": false,
+  "nameCache": null,
+  "safari10": false,
+  "toplevel": false,
+  "warnings": false
+}

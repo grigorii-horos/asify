@@ -1,2 +1,1 @@
-
-setTimeout(()=>console.log('First'),1000)
+setTimeout(() => console.log('First'), 1000);

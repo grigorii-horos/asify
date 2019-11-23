@@ -1,22 +1,20 @@
-// @ts-ignore
-(function (w, d, scriptStr, styleStr, isArray) {
-  function sAttr(element, attr, value) {
+((document, window, entries, isArray, style, script) => {
+  const sAttr = (element) => (attr, value) => {
     element.setAttribute(attr, value);
-  }
+  };
 
-  function isStyleFn(entry) {
-    return entry.type == styleStr || /css$/.test(entry.src);
-  }
+  const isStyleFn = (entry) => entry.type == style || /css$/.test(entry.src);
 
-  function getURLs(exts) {
-    function toObj(arg) {
+  const getURLs = (exts) => {
+    const toObj = (arg) => {
       if (typeof arg == 'object') {
         return arg;
       }
+
       return {
-        src: arg
+        src: arg,
       };
-    }
+    };
 
     // If argument is a string or object
     if (!isArray(exts)) {
@@ -29,101 +27,89 @@
     }
 
     // if argument is two dimensional array
-    return exts.map(function (extsSub) {
-      return extsSub.map(toObj);
-    });
-  }
+    return exts.map((extsSub) => extsSub.map(toObj));
+  };
 
-  function load(exts, cb) {
-    var urls = getURLs(exts);
+  const load = (exts, cb) => {
+    const loadC = (urls) => {
+      const sources = urls.shift();
 
-    function loadC(urls) {
-      var sources = urls.shift();
       if (!sources) {
         if (cb) {
           return cb();
         }
+
         return;
       }
 
-      var chLen = sources.length;
+      let chLen = sources.length;
 
-      sources.map(function (source) {
-        var key;
-        var load = source.load;
-        var isStyle = isStyleFn(source);
+      sources.map((source) => {
+        const isStyle = isStyleFn(source);
 
-        var s = d.createElement(isStyle ? 'link' : scriptStr);
-        sAttr(s, isStyle ? 'href' : 'src', source.src);
+        const element = document.createElement(isStyle ? 'link' : script);
+        const s = sAttr(element);
+        s(isStyle ? 'href' : 'src', source.src);
 
         if (isStyle) {
-          sAttr(s, 'rel', 'stylesheet');
-          sAttr(s, 'media', 'only x');
+          s('rel', 'stylesheet');
+          s('media', 'only x');
         }
 
-        if (load) {
-          for (key in load) {
-            if (load.hasOwnProperty(key)) {
-              sAttr(s, key, load[key]);
-            }
-          }
+        console.log(source.load);
+        if (source.load) {
+          entries(source.load).map(([key, value]) => {
+            s(key, value);
+          });
         }
 
         console.log('Add file:', source.src);
-        (isStyle ? d.head : d.body).append(s);
+        (isStyle ? document.head : document.body).append(element);
 
-        s.onload = function () {
+        s.onload = () => {
           if (isStyle) {
             s.media = 'all';
           }
+
           chLen--;
           if (!chLen) {
             loadC(urls);
           }
         };
 
-        s.onerror = function (err) {
+        s.onerror = (err) => {
           if (cb) {
             cb(err);
           }
         };
       });
-    }
+    };
 
-    loadC(urls);
-  }
+    loadC(getURLs(exts));
+  };
 
-  function preload(exts, type) {
-    var urls = getURLs(exts);
+  const preload = (exts, type = 'preload') => {
+    getURLs(exts).map((urlsSub) => {
+      urlsSub.map((source) => {
+        const link = document.createElement('link');
+        const s = sAttr(link);
+        s('rel', type);
+        s('href', source.src);
+        s('as', isStyleFn(source) ? style : script);
 
-    urls.map(function (urlsSub) {
-      urlsSub.map(function (source) {
-        var key;
-        var preload = source.preload;
-
-        var link = d.createElement('link');
-        sAttr(link, 'rel', type || 'preload');
-        sAttr(link, 'href', source.src);
-        sAttr(link, 'as', isStyleFn(source) ? styleStr : scriptStr);
-
-        if (preload) {
-          for (key in preload) {
-            if (preload.hasOwnProperty(key)) {
-              sAttr(link, key, preload[key]);
-            }
-          }
+        if (source.preload) {
+          entries(source.preload).map(([key, value]) => {
+            s(key, value);
+          });
         }
 
-        console.log('Add ' + (type || 'preload') + ':', source.src);
-        d.head.append(link);
+        console.log(`Add ${type}: ${source.src}`);
+        document.head.append(link);
       });
     });
-  }
-  if (typeof exports !== 'undefined') {
-    exports.asify = load;
-    exports.asify.preload = preload;
-  } else {
-    w.asify = load;
-    w.asify.preload = preload;
-  }
-}(window, document, 'script', 'style', Array.isArray));
+  };
+
+
+  window.asify = load;
+  window.asify.preload = preload;
+})(document, window, Object.entries, Array.isArray, 'style', 'script');
